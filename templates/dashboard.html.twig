@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<!-- Navbar -->
+{{ include('header.html.twig') }}
+
+<!-- Main Content -->
+<main class="flex-1 p-4 flex justify-center">
+    <!-- Standing Component -->
+    <div class="mx-auto w-[340px] sm:w-[460px]">
+        <div class="rounded-3xl border border-gray-200 bg-white px-8 py-7 dark:border-gray-600 dark:bg-gray-800">
+            <div class="-mx-8 -mt-7 px-8 py-7">
+                <h4 class="text-base font-bold">Landing Challenge 2025</h4>
+            </div>
+            <div class="-mx-8 -mb-7 overflow-x-auto rounded-3xl bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-600">
+                <div class="inline-block min-w-full align-middle">
+                    <table class="min-w-full table-auto border-collapse bg-gray-100 dark:bg-gray-700">
+                        <thead class="text-xs font-bold uppercase">
+                        <tr>
+                            <th class="py-3.5 pe-4 ps-8 text-left"># / Pilote</th>
+                            <th class="px-2.5 py-3.5 text-center">Vols</th>
+                            <th class="px-2.5 py-3.5 text-center">Total</th>
+                            <th class="py-3.5 pe-8 ps-1 text-end">Écart</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-sm font-bold [&_td]:bg-white dark:[&_td]:bg-gray-800">
+                        {{ include('scoreline.html.twig') }}
+                        <!-- Ajouter d'autres pilotes ici -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+{{ include('footer.html.twig') }}
+
+</body>
+</html>
