@@ -1,40 +1,226 @@
-<!DOCTYPE html>
-<html lang="fr" class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Challenge</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex flex-col min-h-screen">
+{% extends 'base.html.twig' %}
 
-<!-- Navbar -->
+{% block title %}Landing Competition{% endblock %}
+
+{% block body %}
 {{ include('header.html.twig') }}
 
 <!-- Main Content -->
-<main class="flex-1 p-4 flex justify-center">
-    <!-- Standing Component -->
-    <div class="mx-auto w-[340px] sm:w-[460px]">
-        <div class="rounded-3xl border border-gray-200 bg-white px-8 py-7 dark:border-gray-600 dark:bg-gray-800">
-            <div class="-mx-8 -mt-7 px-8 py-7">
-                <h4 class="text-base font-bold">Landing Challenge 2025</h4>
+<main class="container mx-auto px-4 py-6 md:py-8">
+    <!-- Scoreboard Title -->
+    {% if app.user %}
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 md:mb-8 space-y-3 md:space-y-0">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Classement actuel</h2>
+            <a href="{{ path('app_competitor_new') }}"  class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+                <i class="fas fa-user-plus mr-2"></i> Ajouter un participant
+            </a>
+            <a href="{{ path('app_aircraft_new') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+                <i class="fas fa-plane-circle-check mr-2"></i> Ajouter un appareil
+            </a>
+            <a href="{{ path('app_scoreline_new') }}"  class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+                <i class="fas fa-flag-checkered mr-2"></i> Ajouter un score
+            </a>
+            <a href="{{ path('app_export_excel') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+                <i class="fas fa-download mr-2"></i> Exporter
+            </a>
+        </div>
+    {% endif %}
+    <!-- Scoreboard Table - Version mobile simplifiée -->
+    <div class="md:hidden bg-white rounded-xl shadow-md overflow-hidden mb-8 text-center">
+        <div class="divide-y divide-gray-200">
+            <!-- SCORELINES -->
+            {% for entry in scoresWithRanks %}
+                {{ include('scoreline.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Scoreboard Table - Version desktop -->
+    <div class="hidden md:block bg-white rounded-xl shadow-md overflow-hidden mb-12">
+        <div class="table-responsive-md">
+            <table class="w-full">
+                <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-4 md:px-6 py-3 text-left">#</th>
+                    <th class="px-4 md:px-6 py-3 text-left">Pilote</th>
+                    <th class="px-4 md:px-6 py-3 text-left hidden lg:table-cell">Appareil</th>
+                    <th class="px-4 md:px-6 py-3 text-center">Précision</th>
+                    <th class="px-4 md:px-6 py-3 text-center">Douceur</th>
+                    <th class="px-4 md:px-6 py-3 text-center">Stabilité</th>
+                    <th class="px-4 md:px-6 py-3 text-right">Total</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                {% for entry in scoresWithRanks %}
+                    {% set initials = '' %}
+                    {% for word in entry.scoreline.competitor.name|split(' ') %}
+                        {% set initials = initials ~ word|first|upper %}
+                    {% endfor %}
+                    {{ include('scoreline-desktop.html.twig') }}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    {% if app.user %}
+        <!-- Tableau des appareils (admin) -->
+        <div class="admin-table">
+            <h3>Gestion des appareils</h3>
+            <div class="table-responsive-md">
+                {{ include('aircraft_tab.html.twig') }}
             </div>
-            <div class="-mx-8 -mb-7 overflow-x-auto rounded-3xl bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-600">
-                <div class="inline-block min-w-full align-middle">
-                    <table class="min-w-full table-auto border-collapse bg-gray-100 dark:bg-gray-700">
-                        <thead class="text-xs font-bold uppercase">
-                        <tr>
-                            <th class="py-3.5 pe-4 ps-8 text-left"># / Pilote</th>
-                            <th class="px-2.5 py-3.5 text-center">Vols</th>
-                            <th class="px-2.5 py-3.5 text-center">Total</th>
-                            <th class="py-3.5 pe-8 ps-1 text-end">Écart</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-sm font-bold [&_td]:bg-white dark:[&_td]:bg-gray-800">
-                        {{ include('scoreline.html.twig') }}
-                        <!-- Ajouter d'autres pilotes ici -->
-                        </tbody>
-                    </table>
+        </div>
+
+        <!-- Tableau des participants (admin) -->
+        <div class="admin-table">
+            <h3>Gestion des participants</h3>
+            <div class="table-responsive-md">
+                {{ include('competitor_tab.html.twig') }}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Rules Section -->
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">Critères d'évaluation</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <!-- Precision Card -->
+        <div class="critere-card precision-card animate-fade-in delay-100">
+            <div class="card-content">
+                <div class="flex items-start mb-4">
+                    <div class="card-icon precision-icon">
+                        <i class="fas fa-bullseye text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Précision</h3>
+                        <p class="text-gray-600 text-sm mt-1">
+                            Mesure la qualité de l'alignement avec la zone cible
+                        </p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4 text-sm md:text-base">
+                    La précision mesure à quel point l'atterrissage a été effectué sur la zone cible.
+                    Les points sont attribués en fonction de la distance par rapport au point idéal.
+                </p>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span><strong>10:</strong> Atterrissage parfait sur la cible</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span><strong>8-9:</strong> Très proche de la cible</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span><strong>6-7:</strong> Dans la zone acceptable</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span><strong>4-5:</strong> Hors de la zone idéale</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span><strong>0-3:</strong> Atterrissage très imprécis</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smoothness Card -->
+        <div class="critere-card douceur-card animate-fade-in delay-200">
+            <div class="card-content">
+                <div class="flex items-start mb-4">
+                    <div class="card-icon douceur-icon">
+                        <i class="fas fa-feather-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Douceur</h3>
+                        <p class="text-gray-600 text-sm mt-1">
+                            Évalue la fluidité et le confort de l'atterrissage
+                        </p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4 text-sm md:text-base">
+                    La douceur évalue la fluidité de l'atterrissage. Elle prend en compte la force de l'impact,
+                    la stabilité de la descente et l'absence de rebonds.
+                </p>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span>
+                            <span><strong>10:</strong> Atterrissage parfaitement doux</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span>
+                            <span><strong�8-9:</strong> Très peu de sensation d'impact</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span>
+                            <span><strong>6-7:</strong> Impact modéré mais acceptable</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span>
+                            <span><strong>4-5:</strong> Atterrissage dur</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">•</span>
+                            <span><strong>0-3:</strong> Atterrissage très violent</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stability Card -->
+        <div class="critere-card stabilite-card animate-fade-in delay-300">
+            <div class="card-content">
+                <div class="flex items-start mb-4">
+                    <div class="card-icon stabilite-icon">
+                        <i class="fas fa-balance-scale-right text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Stabilité</h3>
+                        <p class="text-gray-600 text-sm mt-1">
+                            Mesure l'alignement et la correction des dérives
+                        </p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mb-4 text-sm md:text-base">
+                    La stabilité mesure l'alignement de l'appareil lors de l'atterrissage. Elle prend en compte
+                    l'angle d'approche, l'alignement avec la piste et la correction des dérives.
+                </p>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <span class="text-purple-500 mr-2">•</span>
+                            <span><strong>10:</strong> Approche et atterrissage parfaitement stables</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-500 mr-2">•</span>
+                            <span><strong>8-9:</strong> Très peu de corrections nécessaires</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-500 mr-2">•</span>
+                            <span><strong>6-7:</strong> Quelques corrections mais globalement stable</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-500 mr-2">•</span>
+                            <span><strong>4-5:</strong> Approche instable nécessitant de nombreuses corrections</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-500 mr-2">•</span>
+                            <span><strong>0-3:</strong> Atterrissage très instable</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -43,6 +229,4 @@
 
 <!-- Footer -->
 {{ include('footer.html.twig') }}
-
-</body>
-</html>
+{% endblock %}

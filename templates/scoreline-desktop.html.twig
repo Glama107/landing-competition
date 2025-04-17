@@ -1,0 +1,76 @@
+
+    <tr class="hover:bg-gray-50 transition">
+        <td class="px-4 md:px-6 py-4 font-bold
+                        {% if entry.rank == 1 %}
+                            text-yellow-500
+                        {% elseif entry.rank == 2 %}
+                            text-gray-400
+                        {% elseif entry.rank == 3 %}
+                            text-orange-700
+                        {% else %}
+                            text-gray-900
+                        {% endif %}
+                        ">
+            {{ entry.rank }}
+        </td>
+        <td class="px-4 md:px-6 py-4">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <span class="text-blue-600 font-bold">{{ initials }}</span>
+                </div>
+                <div class="ml-3 md:ml-4">
+                    <div class="font-medium text-gray-900">{{ entry.scoreline.competitor.name }}</div>
+                </div>
+            </div>
+        </td>
+        <td class="px-4 md:px-6 py-4 text-gray-700 hidden lg:table-cell">{{ entry.scoreline.aircraft.model }}</td>
+
+        <!-- Précision -->
+        <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
+            {% if entry.scoreline.replacingnote == 1 %}
+                {% if entry.scoreline.savingnote > entry.scoreline.firstnote %}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.firstnote }}</span>
+                    <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                {% else %}
+                    {{ entry.scoreline.firstnote }}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                {% endif %}
+            {% else %}
+                {{ entry.scoreline.firstnote }}
+            {% endif %}
+        </td>
+
+        <!-- Douceur -->
+        <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
+            {% if entry.scoreline.replacingnote == 2 %}
+                {% if entry.scoreline.savingnote > entry.scoreline.secondscore %}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
+                    <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                {% else %}
+                    {{ entry.scoreline.secondscore }}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                {% endif %}
+            {% else %}
+                {{ entry.scoreline.secondscore }}
+            {% endif %}
+        </td>
+
+        <!-- Stabilité -->
+        <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
+            {% if entry.scoreline.replacingnote == 3 %}
+                {% if entry.scoreline.savingnote > entry.scoreline.thirdnote %}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.thirdnote }}</span>
+                    <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                {% else %}
+                    {{ entry.scoreline.thirdnote }}
+                    <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                {% endif %}
+            {% else %}
+                {{ entry.scoreline.thirdnote }}
+            {% endif %}
+        </td>
+
+        <td class="px-4 md:px-6 py-4 text-right font-bold text-blue-600 text-lg md:text-xl">
+            {{ entry.totalScore }}
+        </td>
+    </tr>

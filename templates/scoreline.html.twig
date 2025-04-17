@@ -1,13 +1,75 @@
-<tr class="ring-1 ring-gray-200 dark:ring-gray-600 first:rounded-t-3xl">
-    <td class="whitespace-nowrap py-4 pe-4 ps-8 text-left">
-        <div class="flex items-center gap-1.5">
-            <div>1</div>
-            <div class="min-w-0 max-w-[150px] flex-1 truncate">Jean M.</div>
+<div class="p-4">
+    <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center">
+            <span class="
+                text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 font-bold
+                {% if entry.rank == 1 %}
+                    bg-yellow-500
+                {% elseif entry.rank == 2 %}
+                    bg-gray-400
+                {% elseif entry.rank == 3 %}
+                    bg-orange-700
+                {% else %}
+                    bg-gray-900
+                {% endif %}
+            ">
+                {{ entry.rank }}
+            </span>
+            <div>
+                <h3 class="font-bold text-gray-900">{{ entry.scoreline.competitor.name | capitalize }}</h3>
+                <p class="text-sm text-gray-500">{{ entry.scoreline.aircraft.registration }} - {{ entry.scoreline.aircraft.model }}</p>
+            </div>
         </div>
-    </td>
-    <td class="whitespace-nowrap px-2.5 py-4 text-center">3</td>
-    <td class="whitespace-nowrap px-2.5 py-4 text-center">12 pts</td>
-    <td class="whitespace-nowrap py-4 pe-8 ps-1 text-end text-gray-500 dark:text-gray-400">
-        +0.5
-    </td>
-</tr>
+        <span class="text-xl font-bold text-blue-600">{{ entry.totalScore }}</span>
+    </div>
+    <div class="grid grid-cols-3 gap-2 text-center text-sm">
+        <div>
+            <p class="text-gray-500">Précision</p>
+            <p class="font-bold text-green-600">
+                {% if entry.scoreline.replacingnote == 1 %}
+                    {% if entry.scoreline.savingnote > entry.scoreline.firstnote %}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.firstnote }}</span>
+                        <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    {% else %}
+                        {{ entry.scoreline.firstnote }}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {% endif %}
+                {% else %}
+                    {{ entry.scoreline.firstnote }}
+                {% endif %}
+            </p>
+        </div>
+        <div>
+            <p class="text-gray-500">Douceur</p>
+            <p class="font-bold text-green-600">
+                {% if entry.scoreline.replacingnote == 2 %}
+                    {% if entry.scoreline.savingnote > entry.scoreline.secondscore %}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
+                        <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    {% else %}
+                        {{ entry.scoreline.secondscore }}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {% endif %}
+                {% else %}
+                    {{ entry.scoreline.secondscore }}
+                {% endif %}
+            </p>
+        </div>
+        <div>
+            <p class="text-gray-500">Stabilité</p>
+            <p class="font-bold text-green-600">
+                {% if entry.scoreline.replacingnote == 3 %}
+                    {% if entry.scoreline.savingnote > entry.scoreline.thirdnote %}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.thirdnote }}</span>
+                        <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    {% else %}
+                        {{ entry.scoreline.thirdnote }}
+                        <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {% endif %}
+                {% else %}
+                    {{ entry.scoreline.thirdnote }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>

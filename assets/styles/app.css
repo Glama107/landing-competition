@@ -1,3 +1,298 @@
-body {
-    background-color: skyblue;
+@import "tailwindcss";
+    /* Animation du menu burger */
+.burger-line {
+    transition: all 0.3s ease;
+}
+
+.burger-active .burger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.burger-active .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-active .burger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Animation des cartes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+/* Transition du menu mobile */
+.mobile-menu {
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.mobile-menu-open {
+    max-height: 500px;
+}
+
+/* Nouveau style pour les cartes */
+.critere-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.critere-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.critere-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.precision-card::before {
+    background: linear-gradient(90deg, #3B82F6, #60A5FA);
+}
+
+.douceur-card::before {
+    background: linear-gradient(90deg, #10B981, #34D399);
+}
+
+.stabilite-card::before {
+    background: linear-gradient(90deg, #8B5CF6, #A78BFA);
+}
+
+.card-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0 0 12px 12px;
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.precision-icon {
+    background-color: #EFF6FF;
+    color: #3B82F6;
+}
+
+.douceur-icon {
+    background-color: #ECFDF5;
+    color: #10B981;
+}
+
+.stabilite-icon {
+    background-color: #F5F3FF;
+    color: #8B5CF6;
+}
+
+/* Optimisation du tableau pour les écrans moyens */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .table-responsive-md {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-responsive-md table {
+        min-width: 700px;
+    }
+
+    .table-responsive-md th,
+    .table-responsive-md td {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .table-responsive-md th:first-child,
+    .table-responsive-md td:first-child {
+        padding-left: 1rem;
+    }
+
+    .table-responsive-md th:last-child,
+    .table-responsive-md td:last-child {
+        padding-right: 1rem;
+    }
+}
+
+/* Styles pour le menu utilisateur */
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-menu-btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-menu-btn:hover {
+    color: #60A5FA;
+}
+
+.user-menu-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.user-menu-content a {
+    color: #4B5563;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.user-menu-content a:hover {
+    background-color: #F3F4F6;
+    color: #3B82F6;
+}
+
+.show {
+    display: block;
+}
+
+.bg-auth {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+.card {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.input-field:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+.btn-primary {
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+/* Animation subtile des champs */
+.form-field {
+    transition: all 0.2s ease;
+}
+.form-field:focus-within {
+    transform: translateY(-1px);
+}
+
+/* Animation du bouton */
+.submit-btn {
+    transition: all 0.2s ease;
+}
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Style pour les nouveaux tableaux */
+.admin-table {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.admin-table h3 {
+    padding: 1rem 1.5rem;
+    background: #1F2937;
+    color: white;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+/* Nouveau style pour les boutons d'action */
+.action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    margin-left: 0.5rem;
+}
+
+.edit-icon {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3B82F6;
+}
+
+.edit-icon:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+}
+
+.delete-icon {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+}
+
+.delete-icon:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Style responsive pour les icônes */
+@media (max-width: 640px) {
+    .action-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
 }
