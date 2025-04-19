@@ -59,10 +59,10 @@ final class ScorelineController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_scoreline_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('scoreline/edit.html.twig', [
+        return $this->render('scoreline/new.html.twig', [
             'scoreline' => $scoreline,
             'form' => $form,
         ]);
@@ -76,6 +76,6 @@ final class ScorelineController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_scoreline_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
     }
 }

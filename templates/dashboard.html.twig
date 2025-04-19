@@ -20,7 +20,7 @@
             <a href="{{ path('app_scoreline_new') }}"  class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
                 <i class="fas fa-flag-checkered mr-2"></i> Ajouter un score
             </a>
-            <a href="{{ path('app_export_excel') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+            <a href="{{ path('app_export_excel') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition items-center justify-center w-full hidden md:flex md:w-auto">
                 <i class="fas fa-download mr-2"></i> Exporter
             </a>
         </div>
@@ -48,6 +48,7 @@
                     <th class="px-4 md:px-6 py-3 text-center">Douceur</th>
                     <th class="px-4 md:px-6 py-3 text-center">Stabilité</th>
                     <th class="px-4 md:px-6 py-3 text-right">Total</th>
+                    <th class="px-4 md:px-6 py-3 text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">

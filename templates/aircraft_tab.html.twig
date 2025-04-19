@@ -3,7 +3,7 @@
     <tr>
         <th class="px-4 md:px-6 py-3 text-left">ID</th>
         <th class="px-4 md:px-6 py-3 text-left">Immatriculation</th>
-        <th class="px-4 md:px-6 py-3 text-left">Modèle</th>
+        <th class="px-4 md:px-6 py-3 text-left hidden xs:block">Modèle</th>
         <th class="px-4 md:px-6 py-3 text-right">Actions</th>
     </tr>
     </thead>
@@ -12,7 +12,7 @@
     <tr class="hover:bg-gray-50 transition">
         <td class="px-4 md:px-6 py-4">{{ aircraft.id }}</td>
         <td class="px-4 md:px-6 py-4 font-medium">{{ aircraft.registration }}</td>
-        <td class="px-4 md:px-6 py-4">{{ aircraft.model }}</td>
+        <td class="px-4 md:px-6 py-4 hidden xs:block">{{ aircraft.model }}</td>
         <td class="px-4 md:px-6 py-4 text-right">
             <a href="{{ path('app_aircraft_edit', {'id': aircraft.id}) }}" class="action-icon edit-icon" title="Modifier">
                 <i class="fas fa-edit"></i>
