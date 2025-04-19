@@ -34,6 +34,7 @@ jobs:
             echo "Building assets..."
             npm install
             npm run build
+            php bin/console cache:clear
             echo "Reloading Nginx..."
             sudo systemctl reload nginx
 
