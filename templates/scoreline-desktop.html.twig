@@ -1,17 +1,18 @@
 
     <tr class="hover:bg-gray-50 transition">
-        <td class="px-4 md:px-6 py-4 font-bold
-                        {% if entry.rank == 1 %}
-                            text-yellow-500
-                        {% elseif entry.rank == 2 %}
-                            text-gray-400
-                        {% elseif entry.rank == 3 %}
-                            text-orange-700
-                        {% else %}
-                            text-gray-900
-                        {% endif %}
-                        ">
-            {{ entry.rank }}
+        <td class="px-4 md:px-6 py-4">
+            <div class=" w-8 h-8 mx-auto position-badge
+                {% if entry.rank == 1 %}
+                    gold-position metallic-effect
+                {% elseif entry.rank == 2 %}
+                    silver-position metallic-effect
+                {% elseif entry.rank == 3 %}
+                    bronze-position metallic-effect
+                {% else %}
+                    other-position
+                {% endif %}">
+                {{ entry.rank }}
+            </div>
         </td>
         <td class="px-4 md:px-6 py-4">
             <div class="flex items-center">
@@ -73,17 +74,19 @@
         <td class="px-4 md:px-6 py-4 text-right font-bold text-blue-600 text-lg md:text-xl">
             {{ entry.totalScore }}
         </td>
+        {% if app.user and is_granted('ROLE_ADMIN') %}
         <td class="px-4 md:px-6 py-4 text-right">
             <div class="flex justify-end space-x-3">
-                <a href="{{ path('app_scoreline_edit', {'id': entry.scoreline.id}) }}" class="action-btn edit-btn">
-                    <i class="fas fa-edit text-lg"></i>
+                <a href="{{ path('app_scoreline_edit', {'id': entry.scoreline.id}) }}" class="action-icon edit-icon">
+                    <i class="fas fa-edit"></i>
                 </a>
-                <form class="action-btn delete-btn" method="post" action="{{ path('app_scoreline_delete', {'id': entry.scoreline.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <form class="contents" method="post" action="{{ path('app_scoreline_delete', {'id': entry.scoreline.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.scoreline.id) }}">
-                    <button title="Supprimer">
-                        <i class="fas fa-trash text-lg"></i>
+                    <button class="action-icon delete-icon" title="Supprimer">
+                        <i class="fas fa-trash"></i>
                     </button>
                 </form>
             </div>
         </td>
+        {% endif %}
     </tr>

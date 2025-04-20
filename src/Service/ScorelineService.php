@@ -22,18 +22,33 @@ class ScorelineService
         $scoresWithRanks = [];
 
         foreach ($scorelines as $scoreline) {
-            $scoresWithRanks[] = ['scoreline' => $scoreline, 'totalScore' => $scoreline->calculateTotalScore(), 'replacedNote' => $scoreline->getReplacedNote(),];
+            $scoresWithRanks[] = [
+                'scoreline' => $scoreline,
+                'totalScore' => $scoreline->calculateTotalScore(),
+                'replacedNote' => $scoreline->getReplacedNote(),
+            ];
         }
 
-// Tri par score décroissant
         usort($scoresWithRanks, fn($a, $b) => $b['totalScore'] <=> $a['totalScore']);
 
-// Ajout des rangs
-        foreach ($scoresWithRanks as $index => &$entry) {
-            $entry['rank'] = $index + 1;
+        $rank = 0;
+        $prevScore = null;
+        $realIndex = 0;
+
+        foreach ($scoresWithRanks as &$entry) {
+            $realIndex++;
+
+            if ($prevScore === null || $entry['totalScore'] < $prevScore) {
+                $rank = $realIndex;
+            }
+
+
+            $entry['rank'] = $rank;
+            $prevScore = $entry['totalScore'];
         }
         unset($entry);
 
         return $scoresWithRanks;
     }
+
 }
