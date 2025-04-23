@@ -43,22 +43,22 @@
         <!-- Douceur -->
         <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
             {% if entry.scoreline.replacingnote == 2 %}
-                {% if entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus %}
+                {% if entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus and entry.scoreline.secondscoreWithBonus > entry.scoreline.savingnoteWithBonus %}
                     <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
                     <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
-                    {% if entry.scoreline.isFlapsUsed %}
+                    {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote > entry.scoreline.secondscoreWithBonus %}
                         <span class="text-red-600 text-xs font-bold align-super">+250</span>
                     {% endif %}
                 {% else %}
                     <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
                     {{ entry.scoreline.secondscore }}
-                    {% if entry.scoreline.isFlapsUsed %}
+                    {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus and entry.scoreline.secondscoreWithBonus > entry.scoreline.savingnoteWithBonus %}
                         <span class="text-red-600 text-xs font-bold align-super">+250</span>
                     {% endif %}
                 {% endif %}
             {% else %}
                 {{ entry.scoreline.secondscore}}
-                {% if entry.scoreline.isFlapsUsed %}
+                {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus %}
                     <span class="text-red-600 text-xs font-bold align-super">+250</span>
                 {% endif %}
             {% endif %}

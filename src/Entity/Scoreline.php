@@ -161,7 +161,6 @@ class Scoreline
         return $note;
     }
 
-
     /**
      * Calcule la somme des scores en prenant en compte le remplacement.
      */
