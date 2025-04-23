@@ -42,23 +42,58 @@
         <div>
             <p class="text-gray-500">Sans volets</p>
             <p class="font-bold text-green-600">
+                {% set saving_note = entry.scoreline.savingnote %}
+                {% set base_note = entry.scoreline.secondscore %}
+                {% set saving_bonus = entry.scoreline.isFlapsUsedReplacing ? 250 : 0 %}
+                {% set base_bonus = entry.scoreline.isFlapsUsed ? 250 : 0 %}
+                {% set saving_with_bonus = saving_note + saving_bonus %}
+                {% set base_with_bonus = base_note + base_bonus %}
+
                 {% if entry.scoreline.replacingnote == 2 %}
-                    {% if entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus and entry.scoreline.secondscoreWithBonus > entry.scoreline.savingnoteWithBonus %}
-                        <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
-                        <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
-                        {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote > entry.scoreline.secondscoreWithBonus %}
-                            <span class="text-red-600 text-xs font-bold align-super">+250</span>
-                        {% endif %}
+                    {% if saving_with_bonus < base_with_bonus %}
+                        <span class="text-yellow-500">
+                {{ saving_note }}
+                            {% if saving_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
+                        <span class="line-through text-gray-500">
+                {{ base_note }}
+                            {% if base_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
+                    {% elseif base_with_bonus < saving_with_bonus %}
+                        <span>
+                {{ base_note }}
+                            {% if base_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
+                        <span class="line-through text-gray-500">
+                {{ saving_note }}
+                            {% if saving_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
                     {% else %}
-                        <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
-                        {{ entry.scoreline.secondscore }}
-                        {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus and entry.scoreline.secondscoreWithBonus > entry.scoreline.savingnoteWithBonus %}
-                            <span class="text-red-600 text-xs font-bold align-super">+250</span>
-                        {% endif %}
+                        {# Cas d'égalité, priorité à la note de base ici #}
+                        <span>
+                {{ base_note }}
+                            {% if base_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
+                        <span class="line-through text-gray-500">
+                {{ saving_note }}
+                            {% if saving_bonus %}
+                                <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                            {% endif %}
+            </span>
                     {% endif %}
                 {% else %}
-                    {{ entry.scoreline.secondscore }}
-                    {% if (entry.scoreline.isFlapsUsed or entry.scoreline.isFlapsUsedReplacing) and entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus %}
+                    {{ base_note }}
+                    {% if base_bonus %}
                         <span class="text-red-600 text-xs font-bold align-super">+250</span>
                     {% endif %}
                 {% endif %}
