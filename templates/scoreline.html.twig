@@ -24,7 +24,7 @@
     </div>
     <div class="grid grid-cols-3 gap-2 text-center text-sm">
         <div>
-            <p class="text-gray-500">Précision</p>
+            <p class="text-gray-500">Libre</p>
             <p class="font-bold text-green-600">
                 {% if entry.scoreline.replacingnote == 1 %}
                     {% if entry.scoreline.savingnote < entry.scoreline.firstnote %}
@@ -40,7 +40,7 @@
             </p>
         </div>
         <div>
-            <p class="text-gray-500">Douceur</p>
+            <p class="text-gray-500">Sans volets</p>
             <p class="font-bold text-green-600">
                 {% if entry.scoreline.replacingnote == 2 %}
                     {% if entry.scoreline.savingnote < entry.scoreline.secondscore %}
@@ -65,7 +65,7 @@
             </p>
         </div>
         <div>
-            <p class="text-gray-500">Stabilité</p>
+            <p class="text-gray-500">Sans moteur</p>
             <p class="font-bold text-green-600">
                 {% if entry.scoreline.replacingnote == 3 %}
                     {% if entry.scoreline.savingnote < entry.scoreline.thirdnote %}
