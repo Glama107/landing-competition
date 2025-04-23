@@ -29,24 +29,21 @@ class ScorelineService
             ];
         }
 
-        usort($scoresWithRanks, fn($a, $b) => $b['totalScore'] <=> $a['totalScore']);
+        usort($scoresWithRanks, fn($a, $b) => $a['totalScore'] <=> $b['totalScore']);
 
         $rank = 0;
         $prevScore = null;
-        $realIndex = 0;
+        $sameRankCount = 0;
 
-        foreach ($scoresWithRanks as &$entry) {
-            $realIndex++;
-
-            if ($prevScore === null || $entry['totalScore'] < $prevScore) {
-                $rank = $realIndex;
+        foreach ($scoresWithRanks as $i => &$entry) {
+            if ($prevScore === null || $entry['totalScore'] !== $prevScore) {
+                $rank = $i + 1;
             }
-
-
             $entry['rank'] = $rank;
             $prevScore = $entry['totalScore'];
         }
         unset($entry);
+
 
         return $scoresWithRanks;
     }

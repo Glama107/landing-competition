@@ -25,7 +25,7 @@ class ScorelineExportService
         $sheet = $spreadsheet->getActiveSheet();
 
         // En-têtes
-        $headers = ['#', 'Pilote', 'Appareil', 'Score1', 'Score2', 'Score3', 'Total'];
+        $headers = ['#', 'Juge', 'Pilote', 'Appareil', 'Libre', 'Sans volets', 'Flaps utilisés', 'Sans moteur', 'Total', 'Remarques'];
         $sheet->fromArray($headers, null, 'A1');
 
         // Récupération des données
@@ -39,6 +39,14 @@ class ScorelineExportService
             $firstnote = $scoreline->getFirstnote();
             $secondscore = $scoreline->getSecondscore();
             $thirdnote = $scoreline->getThirdnote();
+            $judge = $scoreline->getJudge()?->getName();
+            $flapsUsed = 'N/A';
+            if ($scoreline->isFlapsUsed() || $scoreline->isFlapsUsedReplacing()) {
+                $flapsUsed = '+ 250';
+            } else {
+                $flapsUsed = 'Non';
+            }
+            $comments = $scoreline->getComments();
 
             if ($scoreline->getSavingnote() !== null && $scoreline->getReplacingnote() !== null) {
                 $replacing = $scoreline->getReplacingnote();
@@ -50,12 +58,15 @@ class ScorelineExportService
 
             $sheet->fromArray([
                 $entry['rank'],
+                $judge,
                 $scoreline->getCompetitor()?->getName(), // Ou autre property du Competitor (à ajuster)
                 $scoreline->getAircraft()?->getRegistration(),   // Ou autre property du Aircraft (à ajuster)
                 $firstnote,
                 $secondscore,
+                $flapsUsed,
                 $thirdnote,
                 $entry['totalScore'],
+                $comments
             ], null, 'A' . $row);
 
             $row++;

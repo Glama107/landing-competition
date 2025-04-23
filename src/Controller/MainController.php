@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\JudgeRepository;
 use App\Service\ScorelineExportService;
 use App\Service\ScorelineService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,11 +17,13 @@ final class MainController extends AbstractController
     public function index(
         AircraftRepository $aircraftRepository,
         CompetitorRepository $competitorRepository,
-        ScorelineService $scorelineService
+        ScorelineService $scorelineService,
+        JudgeRepository $judgeRepository
     ): Response {
         return $this->render('dashboard.html.twig', [
             'aircrafts' => $aircraftRepository->findAll(),
             'competitors' => $competitorRepository->findAll(),
+            'judges' => $judgeRepository->findAll(),
             'scoresWithRanks' => $scorelineService->getScoresWithRanks(),
         ]);
     }

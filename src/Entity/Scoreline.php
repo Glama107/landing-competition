@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ScorelineRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ScorelineRepository::class)]
@@ -35,6 +36,21 @@ class Scoreline
 
     #[ORM\Column(nullable: true)]
     private ?int $replacingnote = null;
+
+    #[ORM\ManyToOne(inversedBy: 'scorelines')]
+    private ?Judge $judge = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $timeOfPassage = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isFlapsUsed = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isFlapsUsedReplacing = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $comments = null;
 
     public function getId(): ?int
     {
@@ -125,20 +141,43 @@ class Scoreline
         return $this;
     }
 
+    public function getSecondscoreWithBonus(): int
+    {
+        // On récupère la valeur de secondscore (0 si null)
+        $score = $this->secondscore ?? 0;
+        if ($this->isFlapsUsed == 1) { // Test strict sur true
+            $score += 250;
+        }
+        return $score;
+    }
+
+    public function getSavingnoteWithBonus(): ?int
+    {
+        $note = $this->savingnote;
+        dump($this->isFlapsUsed, $this->secondscore);
+
+        if ($note !== null && $this->isFlapsUsedReplacing == 1) {
+            $note += 250;
+        }
+        return $note;
+    }
+
+
     /**
      * Calcule la somme des scores en prenant en compte le remplacement.
      */
     public function calculateTotalScore(): int
     {
         $scores = [
-            1 => $this->firstnote,
-            2 => $this->secondscore,
-            3 => $this->thirdnote,
+            1 => $this->firstnote ?? 0,
+            2 => $this->getSecondscoreWithBonus(),
+            3 => $this->thirdnote ?? 0,
         ];
-        if ($this->savingnote !== null && $this->replacingnote !== null) {
+        $savingnoteWithBonus = $this->getSavingnoteWithBonus();
+        if ($savingnoteWithBonus !== null && $this->replacingnote !== null) {
             if (array_key_exists($this->replacingnote, $scores)) {
-                if ($this->savingnote > $scores[$this->replacingnote]) {
-                    $scores[$this->replacingnote] = $this->savingnote;
+                if ($savingnoteWithBonus < $scores[$this->replacingnote]) {
+                    $scores[$this->replacingnote] = $savingnoteWithBonus;
                 }
             }
         }
@@ -151,23 +190,84 @@ class Scoreline
     public function getReplacedNote(): ?array
     {
         $scores = [
-            1 => ['label' => 'firstnote', 'value' => $this->firstnote],
-            2 => ['label' => 'secondscore', 'value' => $this->secondscore],
-            3 => ['label' => 'thirdnote', 'value' => $this->thirdnote],
+            1 => ['label' => 'firstnote', 'value' => $this->firstnote ?? 0],
+            2 => ['label' => 'secondscore', 'value' => $this->getSecondscoreWithBonus()],
+            3 => ['label' => 'thirdnote', 'value' => $this->thirdnote ?? 0],
         ];
 
-        if ($this->savingnote !== null && $this->replacingnote !== null) {
+        $savingnoteWithBonus = $this->getSavingnoteWithBonus();
+        if ($savingnoteWithBonus !== null && $this->replacingnote !== null) {
             if (array_key_exists($this->replacingnote, $scores)) {
                 $original = $scores[$this->replacingnote];
-                if ($this->savingnote > $original['value']) {
+                if ($savingnoteWithBonus < $original['value']) {
                     return [
                         'originalNoteLabel' => $original['label'],
                         'originalNoteValue' => $original['value'],
-                        'savingNoteValue' => $this->savingnote,
+                        'savingNoteValue' => $savingnoteWithBonus,
                     ];
                 }
             }
         }
         return null;
+    }
+
+    public function getJudge(): ?Judge
+    {
+        return $this->judge;
+    }
+
+    public function setJudge(?Judge $judge): static
+    {
+        $this->judge = $judge;
+
+        return $this;
+    }
+
+    public function getTimeOfPassage(): ?\DateTimeInterface
+    {
+        return $this->timeOfPassage;
+    }
+
+    public function setTimeOfPassage(?\DateTimeInterface $timeOfPassage): static
+    {
+        $this->timeOfPassage = $timeOfPassage;
+
+        return $this;
+    }
+
+    public function isFlapsUsed(): ?bool
+    {
+        return $this->isFlapsUsed;
+    }
+
+    public function setIsFlapsUsed(?bool $isFlapsUsed): static
+    {
+        $this->isFlapsUsed = $isFlapsUsed;
+
+        return $this;
+    }
+
+    public function isFlapsUsedReplacing(): ?bool
+    {
+        return $this->isFlapsUsedReplacing;
+    }
+
+    public function setIsFlapsUsedReplacing(?bool $isFlapsUsedReplacing): static
+    {
+        $this->isFlapsUsedReplacing = $isFlapsUsedReplacing;
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): static
+    {
+        $this->comments = $comments;
+
+        return $this;
     }
 }

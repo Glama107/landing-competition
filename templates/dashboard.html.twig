@@ -20,6 +20,9 @@
             <a href="{{ path('app_scoreline_new') }}"  class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
                 <i class="fas fa-flag-checkered mr-2"></i> Ajouter un score
             </a>
+            <a href="{{ path('app_judge_new') }}"  class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition flex items-center justify-center w-full md:w-auto">
+                <i class="fas fa-flag-checkered mr-2"></i> Ajouter un juge
+            </a>
             <a href="{{ path('app_export_excel') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition items-center justify-center w-full hidden md:flex md:w-auto">
                 <i class="fas fa-download mr-2"></i> Exporter
             </a>
@@ -82,6 +85,14 @@
             <h3>Gestion des participants</h3>
             <div class="table-responsive-md">
                 {{ include('competitor_tab.html.twig') }}
+            </div>
+        </div>
+
+        <!-- Tableau des juges (admin) -->
+        <div class="admin-table">
+            <h3>Gestion des juges</h3>
+            <div class="table-responsive-md">
+                {{ include('judge_tab.html.twig') }}
             </div>
         </div>
     {% endif %}

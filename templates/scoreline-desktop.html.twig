@@ -29,42 +29,50 @@
         <!-- Précision -->
         <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
             {% if entry.scoreline.replacingnote == 1 %}
-                {% if entry.scoreline.savingnote > entry.scoreline.firstnote %}
-                    <span class="line-through text-gray-500">{{ entry.scoreline.firstnote }}</span>
+                {% if entry.scoreline.savingnote < entry.scoreline.firstnote %}
                     <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    <span class="line-through text-gray-500">{{ entry.scoreline.firstnote }}</span>
                 {% else %}
-                    {{ entry.scoreline.firstnote }}
                     <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {{ entry.scoreline.firstnote }}
                 {% endif %}
             {% else %}
                 {{ entry.scoreline.firstnote }}
             {% endif %}
         </td>
-
         <!-- Douceur -->
         <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
             {% if entry.scoreline.replacingnote == 2 %}
-                {% if entry.scoreline.savingnote > entry.scoreline.secondscore %}
-                    <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
+                {% if entry.scoreline.savingnote < entry.scoreline.secondscoreWithBonus %}
                     <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    <span class="line-through text-gray-500">{{ entry.scoreline.secondscore }}</span>
+                    {% if entry.scoreline.isFlapsUsed %}
+                        <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                    {% endif %}
                 {% else %}
-                    {{ entry.scoreline.secondscore }}
                     <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {{ entry.scoreline.secondscore }}
+                    {% if entry.scoreline.isFlapsUsed %}
+                        <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                    {% endif %}
                 {% endif %}
             {% else %}
-                {{ entry.scoreline.secondscore }}
+                {{ entry.scoreline.secondscore}}
+                {% if entry.scoreline.isFlapsUsed %}
+                    <span class="text-red-600 text-xs font-bold align-super">+250</span>
+                {% endif %}
             {% endif %}
         </td>
 
         <!-- Stabilité -->
         <td class="px-4 md:px-6 py-4 text-center font-bold text-green-600">
             {% if entry.scoreline.replacingnote == 3 %}
-                {% if entry.scoreline.savingnote > entry.scoreline.thirdnote %}
-                    <span class="line-through text-gray-500">{{ entry.scoreline.thirdnote }}</span>
+                {% if entry.scoreline.savingnote < entry.scoreline.thirdnote %}
                     <span class="text-yellow-500">{{ entry.scoreline.savingnote }}</span>
+                    <span class="line-through text-gray-500">{{ entry.scoreline.thirdnote }}</span>
                 {% else %}
-                    {{ entry.scoreline.thirdnote }}
                     <span class="line-through text-gray-500">{{ entry.scoreline.savingnote }}</span>
+                    {{ entry.scoreline.thirdnote }}
                 {% endif %}
             {% else %}
                 {{ entry.scoreline.thirdnote }}
