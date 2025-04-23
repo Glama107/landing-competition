@@ -154,7 +154,6 @@ class Scoreline
     public function getSavingnoteWithBonus(): ?int
     {
         $note = $this->savingnote;
-        dump($this->isFlapsUsed, $this->secondscore);
 
         if ($note !== null && $this->isFlapsUsedReplacing == 1) {
             $note += 250;
