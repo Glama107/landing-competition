@@ -101,7 +101,7 @@
     <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">Critères d'évaluation</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <!-- Precision Card -->
+        <!-- Libre Card -->
         <div class="critere-card precision-card animate-fade-in delay-100">
             <div class="card-content">
                 <div class="flex items-start mb-4">
@@ -109,45 +109,33 @@
                         <i class="fas fa-bullseye text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Précision</h3>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Libre</h3>
                         <p class="text-gray-600 text-sm mt-1">
-                            Mesure la qualité de l'alignement avec la zone cible
+                            Évalue la précision d'atterrissage en configuration libre
                         </p>
                     </div>
                 </div>
                 <p class="text-gray-700 mb-4 text-sm md:text-base">
-                    La précision mesure à quel point l'atterrissage a été effectué sur la zone cible.
-                    Les points sont attribués en fonction de la distance par rapport au point idéal.
+                    Cette catégorie mesure la précision de l'atterrissage sans contrainte spécifique.
+                    Le score augmente avec l'éloignement du point idéal. Le meilleur score est 0.
                 </p>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ZONES DE PRÉCISION :</h4>
                     <ul class="space-y-2 text-sm">
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span><strong>10:</strong> Atterrissage parfait sur la cible</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span><strong>8-9:</strong> Très proche de la cible</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span><strong>6-7:</strong> Dans la zone acceptable</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span><strong>4-5:</strong> Hors de la zone idéale</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-2">•</span>
-                            <span><strong>0-3:</strong> Atterrissage très imprécis</span>
-                        </li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone 0 :</strong> 0 pts — Atterrissage parfait</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone +1 :</strong> 50 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone -1 :</strong> 100 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone +2 :</strong> 200 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone +3 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone -2 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Zone -3 :</strong> 500 pts</span></li>
+                        <li class="flex items-start"><span class="text-blue-500 mr-2">•</span><span><strong>Approche interrompue :</strong> 250 pts</span></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Smoothness Card -->
+        <!-- Sans volets Card -->
         <div class="critere-card douceur-card animate-fade-in delay-200">
             <div class="card-content">
                 <div class="flex items-start mb-4">
@@ -155,45 +143,33 @@
                         <i class="fas fa-feather-alt text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Douceur</h3>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Sans volets</h3>
                         <p class="text-gray-600 text-sm mt-1">
-                            Évalue la fluidité et le confort de l'atterrissage
+                            Évalue la qualité d'atterrissage sans l'aide des volets
                         </p>
                     </div>
                 </div>
                 <p class="text-gray-700 mb-4 text-sm md:text-base">
-                    La douceur évalue la fluidité de l'atterrissage. Elle prend en compte la force de l'impact,
-                    la stabilité de la descente et l'absence de rebonds.
+                    Si les volets sont utilisés, un malus de <strong>+250 pts</strong> est appliqué au score.
+                    Cette catégorie teste la capacité à gérer l’arrondi et la vitesse sans aide aérodynamique.
                 </p>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ZONES DE PRÉCISION :</h4>
                     <ul class="space-y-2 text-sm">
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span>
-                            <span><strong>10:</strong> Atterrissage parfaitement doux</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span>
-                            <span><strong�8-9:</strong> Très peu de sensation d'impact</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span>
-                            <span><strong>6-7:</strong> Impact modéré mais acceptable</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span>
-                            <span><strong>4-5:</strong> Atterrissage dur</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-green-500 mr-2">•</span>
-                            <span><strong>0-3:</strong> Atterrissage très violent</span>
-                        </li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone 0 :</strong> 0 pts — Atterrissage parfait</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone +1 :</strong> 50 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone -1 :</strong> 100 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone +2 :</strong> 200 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone +3 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone -2 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Zone -3 :</strong> 500 pts</span></li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">•</span><span><strong>Approche interrompue :</strong> 250 pts</span></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Stability Card -->
+        <!-- Sans moteur Card -->
         <div class="critere-card stabilite-card animate-fade-in delay-300">
             <div class="card-content">
                 <div class="flex items-start mb-4">
@@ -201,44 +177,33 @@
                         <i class="fas fa-balance-scale-right text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Stabilité</h3>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800">Sans moteur</h3>
                         <p class="text-gray-600 text-sm mt-1">
-                            Mesure l'alignement et la correction des dérives
+                            Mesure l'aptitude à atterrir sans assistance moteur
                         </p>
                     </div>
                 </div>
                 <p class="text-gray-700 mb-4 text-sm md:text-base">
-                    La stabilité mesure l'alignement de l'appareil lors de l'atterrissage. Elle prend en compte
-                    l'angle d'approche, l'alignement avec la piste et la correction des dérives.
+                    Cette épreuve teste la précision de trajectoire et de plané. L’objectif est d'atterrir dans la cible
+                    sans possibilité de remise de gaz ni propulsion.
                 </p>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ÉCHELLE DE NOTATION:</h4>
+                    <h4 class="font-bold text-gray-800 mb-2 text-sm">ZONES DE PRÉCISION :</h4>
                     <ul class="space-y-2 text-sm">
-                        <li class="flex items-start">
-                            <span class="text-purple-500 mr-2">•</span>
-                            <span><strong>10:</strong> Approche et atterrissage parfaitement stables</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-500 mr-2">•</span>
-                            <span><strong>8-9:</strong> Très peu de corrections nécessaires</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-500 mr-2">•</span>
-                            <span><strong>6-7:</strong> Quelques corrections mais globalement stable</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-500 mr-2">•</span>
-                            <span><strong>4-5:</strong> Approche instable nécessitant de nombreuses corrections</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-500 mr-2">•</span>
-                            <span><strong>0-3:</strong> Atterrissage très instable</span>
-                        </li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone 0 :</strong> 0 pts — Atterrissage parfait</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone +1 :</strong> 50 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone -1 :</strong> 100 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone +2 :</strong> 200 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone +3 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone -2 :</strong> 300 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Zone -3 :</strong> 500 pts</span></li>
+                        <li class="flex items-start"><span class="text-purple-500 mr-2">•</span><span><strong>Approche interrompue :</strong> 250 pts</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
 </main>
 
 <!-- Footer -->
